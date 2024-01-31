@@ -35,7 +35,7 @@ conn = get_db_connection()
 
 cur = conn.cursor()
 
-cur.execute('SELECT * FROM state')
+cur.execute('SELECT * FROM controller.state')
 for item in cur.fetchone():
     print(item)
 
