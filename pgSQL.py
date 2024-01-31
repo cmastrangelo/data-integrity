@@ -1,7 +1,7 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
-
+import datetime
 
 # Function to establish a database connection
 def get_db_connection():
@@ -32,12 +32,13 @@ def get_db_connection():
 
 # Example usage
 conn = get_db_connection()
-
 cur = conn.cursor()
+cur.execute("SELECT last_check_in FROM controller.state WHERE script = 'nft-miner'")
+result = cur.fetchone()
 
-cur.execute('SELECT * FROM controller.state')
-for item in cur.fetchone():
-    print(item)
+current_time = datetime.datetime.now(datetime.timezone.utc)
+print(current_time - datetime.timedelta(1) > result[0])
+
 
 cur.close()
 conn.close()
